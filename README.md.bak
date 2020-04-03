@@ -1,4 +1,8 @@
 # Rust server that runs inside a Docker container
+[![Docker Automated build](https://img.shields.io/docker/automated/robbiewilliams/rust-server-docker.svg)](https://hub.docker.com/r/robbiewilliams/rust-server-docker/)
+[![Docker build status](https://img.shields.io/docker/build/robbiewilliams/rust-server-docker.svg)](https://hub.docker.com/r/robbiewilliams/rust-server-docker/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/robbiewilliams/rust-server-docker.svg)](https://hub.docker.com/r/robbiewilliams/rust-server-docker/)
+[![Docker stars](https://img.shields.io/docker/stars/robbiewilliams/rust-server-docker.svg)](https://hub.docker.com/r/robbiewilliams/rust-server-docker)
 
 **NOTE**: This image will install/update on startup. The path ```/steamcmd/rust``` can be mounted on the host for data persistence.
 Also note that this image provides the new web-based RCON, so you should set ```RUST_RCON_PASSWORD``` to a more secure password.
