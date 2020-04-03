@@ -13,22 +13,18 @@ RUN apt-get update && \
         nginx \
         expect \
         ca-certificates \
-#        build-essential \
-#        libssl-dev \
         npm \
         unzip \
         tcl \
+        bzip2 \
+        lib32gcc1 \
+        locales \
+        p7zip-full \
+        tar \
+        wget \
         libgdiplus && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-#install nvm
-#RUN curl-o-https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash && source~/.profile
-
-#validate nvm version
-#RUN nvm --version
-
-#install latest node
-#RUN nvm install node
 
 # Remove default nginx stuff
 RUN rm -fr /usr/share/nginx/html/* && \
@@ -41,19 +37,50 @@ RUN curl --output /tmp/gh-pages.zip -sL https://github.com/Facepunch/webrcon/arc
         mv /tmp/gh-pages/* /usr/share/nginx/html/ && \
         rm -rf /tmp/gh-pages
 
-#RUN curl --output /tmp/gh-pages.zip -sL https://github.com/Facepunch/webrcon/archive/gh-pages.zip | unzip /tmp/gh-pages.zip -d /tmp/gh-pages/ && \
-#	mv /tmp/gh-pages/* /usr/share/nginx/html/ && \
-#	rm -fr /tmp/gh-pages
-
 # Customize the webrcon package to fit our needs
 ADD fix_conn.sh /tmp/fix_conn.sh
 
+##Install Steam
+#RUN mkdir -p /steamcmd && wget -qO - http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz -C /steamcmd
+
+#RUN chmod +x /steamcmd/steamcmd.sh && \
+#    /steamcmd/steamcmd.sh +login anonymous +force_install_dir /output +quit;
+
+###
+
+ARG PUID=1000
+
+ENV STEAMCMDDIR /steamcmd
+
+# Install, update & upgrade packages
+# Create user for the server
+# This also creates the home directory we later need
+# Clean TMP, apt-get cache and other stuff to make the image smaller
+# Create Directory for SteamCMD
+# Download SteamCMD
+# Extract and delete archive
+RUN mkdir -p ${STEAMCMDDIR} \
+	&& wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf - -C ${STEAMCMDDIR} \
+	&& apt-get remove --purge -y \
+		wget \
+	&& apt-get clean autoclean \
+	&& apt-get autoremove -y \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Switch to user steam
+#USER steam
+
+WORKDIR $STEAMCMDDIR
+
+VOLUME $STEAMCMDDIR
+####
+
+
+
+
+
 # Create the volume directories
 RUN mkdir -p /steamcmd/rust /usr/share/nginx/html /var/log/nginx
-
-#RUN node -v
-
-RUN npm -v
 
 # Setup proper shutdown support
 ADD shutdown_app/ /app/shutdown_app/
@@ -113,7 +140,7 @@ ENV RUST_SERVER_IDENTITY "docker"
 ENV RUST_SERVER_SEED "12345"
 ENV RUST_SERVER_NAME "Rust Server [DOCKER]"
 ENV RUST_SERVER_DESCRIPTION "This is a Rust server running inside a Docker container!"
-ENV RUST_SERVER_URL "https://hub.docker.com/r/didstopia/rust-server/"
+ENV RUST_SERVER_URL ""
 ENV RUST_SERVER_BANNER_URL ""
 ENV RUST_RCON_WEB "1"
 ENV RUST_RCON_PORT "28016"
