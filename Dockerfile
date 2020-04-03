@@ -41,19 +41,11 @@ RUN curl --output /tmp/gh-pages.zip -sL https://github.com/Facepunch/webrcon/arc
 ADD fix_conn.sh /tmp/fix_conn.sh
 
 ##Install Steam
-#RUN mkdir -p /steamcmd && wget -qO - http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz -C /steamcmd
-
-#RUN chmod +x /steamcmd/steamcmd.sh && \
-#    /steamcmd/steamcmd.sh +login anonymous +force_install_dir /output +quit;
-
-###
-
 ARG PUID=1000
 
 ENV STEAMCMDDIR /steamcmd
 
 # Install, update & upgrade packages
-# Create user for the server
 # This also creates the home directory we later need
 # Clean TMP, apt-get cache and other stuff to make the image smaller
 # Create Directory for SteamCMD
@@ -66,9 +58,6 @@ RUN mkdir -p ${STEAMCMDDIR} \
 	&& apt-get clean autoclean \
 	&& apt-get autoremove -y \
 	&& rm -rf /var/lib/apt/lists/*
-
-# Switch to user steam
-#USER steam
 
 WORKDIR $STEAMCMDDIR
 
@@ -148,10 +137,10 @@ ENV RUST_RCON_PASSWORD "rustytrombone!"
 ENV RUST_UPDATE_CHECKING "0"
 ENV RUST_UPDATE_BRANCH "public"
 ENV RUST_START_MODE "0"
-ENV RUST_OXIDE_ENABLED "1"
+ENV RUST_OXIDE_ENABLED "0"
 ENV RUST_OXIDE_UPDATE_ON_BOOT "1"
-ENV RUST_SERVER_WORLDSIZE "3500"
-ENV RUST_SERVER_MAXPLAYERS "500"
+ENV RUST_SERVER_WORLDSIZE "1500"
+ENV RUST_SERVER_MAXPLAYERS "20"
 ENV RUST_SERVER_SAVE_INTERVAL "600"
 
 # Define directories to take ownership of
