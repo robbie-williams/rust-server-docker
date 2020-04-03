@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t ructandonfer/rust-server:latest .
+docker build -t robbiewilliams/rust-serveri-docker:latest .

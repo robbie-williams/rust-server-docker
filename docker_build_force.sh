@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --no-cache -t ructandonfer/rust-server:latest .
+docker build --no-cache -t robbiewilliams/rust-server-docker:latest .
