@@ -1,0 +1,58 @@
+{
+    "taskDefinition": {
+        "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:514072586515:task-definition/rust-server:3",
+        "containerDefinitions": [
+            {
+                "name": "rust-server-docker",
+                "image": "514072586515.dkr.ecr.ap-southeast-2.amazonaws.com/rust-server-docker",
+                "cpu": 0,
+                "memoryReservation": 3884,
+                "portMappings": [
+                    {
+                        "containerPort": 8080,
+                        "hostPort": 8080,
+                        "protocol": "tcp"
+                    },
+                    {
+                        "containerPort": 28015,
+                        "hostPort": 28015,
+                        "protocol": "tcp"
+                    },
+                    {
+                        "containerPort": 28015,
+                        "hostPort": 28015,
+                        "protocol": "udp"
+                    },
+                    {
+                        "containerPort": 28016,
+                        "hostPort": 28016,
+                        "protocol": "tcp"
+                    }
+                ],
+                "essential": true,
+                "environment": [],
+                "mountPoints": [],
+                "volumesFrom": []
+            }
+        ],
+        "family": "rust-server",
+        "revision": 3,
+        "volumes": [],
+        "status": "ACTIVE",
+        "requiresAttributes": [
+            {
+                "name": "com.amazonaws.ecs.capability.ecr-auth"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+            }
+        ],
+        "placementConstraints": [],
+        "compatibilities": [
+            "EC2"
+        ],
+        "requiresCompatibilities": [
+            "EC2"
+        ]
+    }
+}
