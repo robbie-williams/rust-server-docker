@@ -1,0 +1,27 @@
+AsgMaxSize	1
+DeviceName	/dev/xvdcz
+EbsVolumeSize	22
+EbsVolumeType	gp2
+EcsAmiId	ami-0e6b68880cc94cf09
+EcsClusterName	rust-server-cluster
+EcsEndpoint
+EcsInstanceType	t3.medium
+IamRoleInstanceProfile	arn:aws:iam::514072586515:instance-profile/ecsInstanceRole
+IamSpotFleetRoleArn
+IsWindows	false
+KeyName	rust-server-containers
+SecurityGroupId	sg-62d5401b
+SecurityIngressCidrIp	0.0.0.0/0
+SecurityIngressFromPort	80
+SecurityIngressToPort	80
+SpotAllocationStrategy	diversified
+SpotPrice
+SubnetCidr1	10.0.0.0/24
+SubnetCidr2	10.0.1.0/24
+SubnetCidr3
+SubnetIds	subnet-5f686e3b
+UseSpot	false
+UserData	#!/bin/bash echo ECS_CLUSTER=rust-server-cluster >> /etc/ecs/ecs.config;echo ECS_BACKEND_HOST= >> /etc/ecs/ecs.config;
+VpcAvailabilityZones	ap-southeast-2a,ap-southeast-2b,ap-southeast-2c
+VpcCidr	10.0.0.0/16
+VpcId	vpc-24f08f40
