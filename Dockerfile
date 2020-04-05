@@ -22,6 +22,7 @@ RUN apt-get update && \
         p7zip-full \
         tar \
         wget \
+	bsdtar \
         libgdiplus && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
