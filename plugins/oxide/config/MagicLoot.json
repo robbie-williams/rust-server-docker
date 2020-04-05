@@ -1,0 +1,280 @@
+{
+  "_Settings": {
+    "DisableBlueprintDropMultiplier": true,
+    "DisableBlueprintDrops": false,
+    "ForceRefreshDisabledCratesOnLoad": false,
+    "ItemListMultiplier": 3,
+    "Multiplier": 3,
+    "MultiplyOnlyItemList": false,
+    "RandomWorkshopSkins": true,
+    "ReportMissingConfigCrates": true
+  },
+  "DeveloperDebug": {
+    "_EnableLogs": false,
+    "AmountChange": false,
+    "ExtraItem": false,
+    "LootRefresh": false,
+    "Skins": false
+  },
+  "Exclude": {
+    "list": []
+  },
+  "ExcludeFromMultiplication": {
+    "list": []
+  },
+  "ExtraLoot": {
+    "Enabled": false,
+    "ExtraItemsMax": 3,
+    "ExtraItemsMin": 1,
+    "ItemStackSizeMin": 1,
+    "PreventDuplicates": false,
+    "VanillaLootTablesOnly": true
+  },
+  "ItemList": {
+    "list": {}
+  },
+  "LootContainersEnabled": {
+    "list": {
+      "": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "bradley_crate": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "codelockedhackablecrate": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_basic": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_elite": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_mine": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_normal": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_normal_2": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_normal_2_food": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_normal_2_medical": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_tools": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_underwater_advanced": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "crate_underwater_basic": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm ammo": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm c4": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm construction resources": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm construction tools": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm food": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm medical": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm res": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm tier1 lootbox": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm tier2 lootbox": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "dm tier3 lootbox": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "foodbox": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "giftbox_loot": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "heli_crate": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "loot_barrel_1": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "loot_barrel_2": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "loot_component_test": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "loot_trash": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "loot-barrel-1": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "loot-barrel-2": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "minecart": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "oil_barrel": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "presentdrop": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "stocking_large_deployed": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "stocking_small_deployed": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "supply_drop": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "trash-pile-1": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      },
+      "visualshelvestest": {
+        "enabled": true,
+        "minExtraItems": 0,
+        "maxExtraItems": 0,
+        "lootMultiplier": 1.0
+      }
+    }
+  }
+}
