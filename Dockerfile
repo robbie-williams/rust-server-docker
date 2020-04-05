@@ -71,6 +71,9 @@ VOLUME $STEAMCMDDIR
 # Create the volume directories
 RUN mkdir -p /steamcmd/rust /usr/share/nginx/html /var/log/nginx
 
+# Add plugins
+COPY oxide/ /steamcmd/rust/oxide
+
 # Setup proper shutdown support
 ADD shutdown_app/ /app/shutdown_app/
 WORKDIR /app/shutdown_app
@@ -100,9 +103,6 @@ ADD start_rust.sh /app/start.sh
 
 # Copy the Rust update check script
 ADD update_check.sh /app/update_check.sh
-
-# Add plugins
-ADD plugins/oxide/ /steamcmd/rust/
 
 # Copy extra files
 COPY README.md LICENSE.md /app/
@@ -144,7 +144,7 @@ ENV RUST_START_MODE "0"
 ENV RUST_OXIDE_ENABLED "1"
 ENV RUST_OXIDE_UPDATE_ON_BOOT "1"
 ENV RUST_SERVER_WORLDSIZE "1600"
-ENV RUST_SERVER_MAXPLAYERS "20"
+ENV RUST_SERVER_MAXPLAYERS "40"
 ENV RUST_SERVER_SAVE_INTERVAL "600"
 
 # Define directories to take ownership of
