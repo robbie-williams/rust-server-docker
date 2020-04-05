@@ -69,7 +69,6 @@
   "compatibilities": [
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:514072586515:task-definition/rust-server:3",
   "family": "rust-server",
   "requiresAttributes": [
     {
