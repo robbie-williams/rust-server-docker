@@ -125,9 +125,9 @@ EXPOSE 28016
 
 # Setup default environment variables for the server
 ENV RUST_SERVER_STARTUP_ARGUMENTS "-batchmode -load -nographics +server.secure 1"
-ENV RUST_SERVER_IDENTITY "rustaceansdocker"
+ENV RUST_SERVER_IDENTITY "rustacean"
 ENV RUST_SERVER_SEED "12345"
-ENV RUST_SERVER_NAME "Rustaceans [DOCKER]"
+ENV RUST_SERVER_NAME "Rustacean"
 ENV RUST_SERVER_DESCRIPTION "This is a Rust server running inside a Docker container!"
 ENV RUST_SERVER_URL ""
 ENV RUST_SERVER_BANNER_URL "http://rust.whitecollargaming.com/img/profile.png"
