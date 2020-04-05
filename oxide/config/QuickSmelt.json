@@ -1,44 +1,32 @@
 {
-  "Use Permission": true,
-  "Speed Multipliers": {
-    "global": 3.0,
-    "furnace.shortname": 1.0
-  },
-  "Fuel Usage Speed Multipliers": {
-    "global": 1.0,
-    "furnace.shortname": 1.0
-  },
-  "Fuel Usage Multipliers": {
-    "global": 1,
-    "furnace.shortname": 1
-  },
-  "Output Multipliers": {
-    "global": {
-      "global": 1.0
+  "Permission": "quicksmelt.use",
+    "Use Permission": false,
+      "Speed Multipliers": {
+          "global": 3.0
     },
-    "furnace.shortname": {
-      "item.shortname": 1.0
+      "Fuel Usage Speed Multipliers": {
+          "global": 1.0
+    },
+      "Fuel Usage Multipliers": {
+          "global": 1
+    },
+      "Output Multipliers": {
+          "global": {
+        "global": 1.0
     }
-  },
-  "Whitelist": {
+      },
+        "Whitelist": {
     "global": [
-      "item.shortname"
-    ],
-    "furnace.shortname": [
-      "item.shortname"
-    ]
-  },
+          "item.shortname"
+      ]
+        },
   "Blacklist": {
-    "global": [
-      "item.shortname"
-    ],
-    "furnace.shortname": [
-      "item.shortname"
-    ]
+      "global": [
+            "item.shortname"
+        ]
   },
-  "Smelting Frequencies (Smelt items every N smelting ticks)": {
-    "global": 1,
-    "furnace.shortname": 1
+    "Smelting Frequencies (Smelt items every N smelting ticks)": {
+        "global": 1
   },
-  "Debug": false
+    "Debug": false
 }
