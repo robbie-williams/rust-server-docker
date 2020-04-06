@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -177,7 +177,7 @@ namespace Oxide.Plugins
             SaveConfig();
         }
 
-        private void SendHelpText(BasePlayer player) => SendChatMessage(player, CurrentCraftingRate, CraftingRate);
+        private void SendHelpText(BasePlayer player) => PrintToChat(player, CurrentCraftingRate, CraftingRate);
 
         private void OnServerQuit()
         {
@@ -238,7 +238,7 @@ namespace Oxide.Plugins
             if (BlockedItems.Contains(itemname))
             {
                 task.cancelled = true;
-                SendChatMessage(crafter, CraftBlockedItem, itemname);
+                PrintToChat(crafter, CraftBlockedItem, itemname);
                 foreach (var item in task.takenItems) player.GiveItem(item);
                 //foreach (var amount in task.blueprint.ingredients) crafter.inventory.GiveItem(ItemManager.CreateByItemID(amount.itemid, (int)amount.amount * task.amount));
                 return false;
@@ -247,7 +247,7 @@ namespace Oxide.Plugins
             if (!AllowCraftingWhenInventoryIsFull && !HasPlace(slots, stacks))
             {
                 task.cancelled = true;
-                SendChatMessage(crafter, NoSlots, stacks.Count, slots);
+                PrintToChat(crafter, NoSlots, stacks.Count, slots);
                 foreach (var item in task.takenItems) player.GiveItem(item);
                 return false;
             }
@@ -335,8 +335,6 @@ namespace Oxide.Plugins
         }
 
         #region Helper methods
-
-        private void SendChatMessage(BasePlayer player, string message, params object[] args) => player?.SendConsoleCommand("chat.add", -1, string.Format($"<color={ChatPrefixColor}>{ChatPrefix}</color>: {message}", args), 1.0);
 
         T GetConfigValue<T>(string category, string setting, T defaultValue)
         {
