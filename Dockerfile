@@ -6,22 +6,22 @@ LABEL maintainer="Robbie"
 # Setup default environment variables for the server
 ENV RUST_SERVER_STARTUP_ARGUMENTS "-batchmode -load -nographics +server.secure 1"
 ENV RUST_SERVER_IDENTITY "rustacean"
-ENV RUST_SERVER_SALT "1234"
-ENV RUST_SERVER_SEED "1739"
+ENV RUST_SERVER_SALT "456456874687"
+ENV RUST_SERVER_SEED "768"
 ENV RUST_SERVER_NAME "RUSTACEAN"
-ENV RUST_SERVER_DESCRIPTION "A server designed to maximize your limited game time"
-ENV RUST_SERVER_URL ""
-ENV RUST_SERVER_BANNER_URL "http://rust.whitecollargaming.com/img/profile.png"
+ENV RUST_SERVER_DESCRIPTION ""
+ENV RUST_SERVER_URL "https://rustacean.io"
+ENV RUST_SERVER_BANNER_URL "https://rustacean.s3-ap-southeast-2.amazonaws.com/rustacean-header.png"
 ENV RUST_RCON_WEB "1"
 ENV RUST_RCON_PORT "28016"
 ENV RUST_RCON_PASSWORD "rustytrombone!"
-ENV RUST_UPDATE_CHECKING "0"
+ENV RUST_UPDATE_CHECKING "1"
 ENV RUST_UPDATE_BRANCH "public"
 ENV RUST_START_MODE "0"
 ENV RUST_OXIDE_ENABLED "1"
 ENV RUST_OXIDE_UPDATE_ON_BOOT "1"
-ENV RUST_SERVER_WORLDSIZE "1600"
-ENV RUST_SERVER_MAXPLAYERS "40"
+ENV RUST_SERVER_WORLDSIZE "1500"
+ENV RUST_SERVER_MAXPLAYERS "25"
 ENV RUST_SERVER_SAVE_INTERVAL "600"
 
 # Fix apt-get warnings
@@ -94,7 +94,7 @@ VOLUME $STEAMCMDDIR
 RUN mkdir -p /steamcmd/rust /usr/share/nginx/html /var/log/nginx
 
 # Add plugins
-COPY oxide/ /steamcmd/rust/oxide
+COPY rust_config/oxide/ /steamcmd/rust/oxide
 
 #Add admins
 COPY rust_config/users.cfg /steamcmd/rust/server/${RUST_SERVER_IDENTITY}/cfg/
