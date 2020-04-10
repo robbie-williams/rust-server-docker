@@ -56,7 +56,7 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: deploy/task-definition-test.json
-        service: rust-server-service
+        service: rustacean-test
         cluster: rust-server-test-cluster
         wait-for-service-stability: true
 
