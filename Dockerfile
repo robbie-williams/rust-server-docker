@@ -1,4 +1,3 @@
-#FROM ubuntu:18.04
 FROM ubuntu:18.04
 
 LABEL maintainer="Robbie"
@@ -84,11 +83,6 @@ RUN mkdir -p ${STEAMCMDDIR} \
 WORKDIR $STEAMCMDDIR
 
 VOLUME $STEAMCMDDIR
-####
-
-
-
-
 
 # Create the volume directories
 RUN mkdir -p /steamcmd/rust /usr/share/nginx/html /var/log/nginx
