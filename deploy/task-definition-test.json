@@ -1,0 +1,140 @@
+{
+  "ipcMode": null,
+  "executionRoleArn": null,
+  "containerDefinitions": [
+    {
+      "dnsSearchDomains": null,
+      "logConfiguration": null,
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 28015,
+          "protocol": "tcp",
+          "containerPort": 28015
+        },
+        {
+          "hostPort": 28015,
+          "protocol": "udp",
+          "containerPort": 28015
+        },
+        {
+          "hostPort": 28016,
+          "protocol": "tcp",
+          "containerPort": 28015
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "RUST_SERVER_IDENTITY",
+          "value": "rustacean_test"
+        },
+        {
+          "name": "RUST_SERVER_NAME",
+          "value": "RUSTACEAN_TEST"
+        },
+        {
+          "name": "RUST_SERVER_SALT",
+          "value": "123"
+        },
+        {
+          "name": "RUST_SERVER_SEED",
+          "value": "123"
+        },
+        {
+          "name": "RUST_SERVER_WORLDSIZE",
+          "value": "1000"
+        }
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": 1942,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "514072586515.dkr.ecr.ap-southeast-2.amazonaws.com/rust-server-docker:4a97e595d1397d3e689f903cc9daecf1aed1742b",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "rust-server-docker"
+    }
+  ],
+  "placementConstraints": [],
+  "memory": null,
+  "taskRoleArn": null,
+  "compatibilities": [
+    "EC2"
+  ],
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:514072586515:task-definition/rust-server-test:3",
+  "family": "rust-server-test",
+  "requiresAttributes": [
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.docker-plugin.local"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
+    }
+  ],
+  "pidMode": null,
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "networkMode": null,
+  "cpu": null,
+  "revision": 3,
+  "status": "ACTIVE",
+  "inferenceAccelerators": null,
+  "proxyConfiguration": null,
+  "volumes": [
+    {
+      "efsVolumeConfiguration": null,
+      "name": "rustacean-test",
+      "host": null,
+      "dockerVolumeConfiguration": {
+        "autoprovision": true,
+        "labels": null,
+        "scope": "shared",
+        "driver": "local",
+        "driverOpts": null
+      }
+    }
+  ]
+}
