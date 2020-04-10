@@ -49,7 +49,7 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: deploy/task-definition.json
-        task-definition: deploy/task-definition-test.json
+        task-definition-test: deploy/task-definition-test.json
         container-name: rust-server-docker
         image: ${{ steps.build-image.outputs.image }}
 
