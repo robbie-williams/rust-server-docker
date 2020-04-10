@@ -94,7 +94,7 @@
   "volumes": [
     {
       "efsVolumeConfiguration": null,
-      "name": "rustacean-test",
+      "name": "rustacean-volume",
       "host": null,
       "dockerVolumeConfiguration": {
         "autoprovision": true,
