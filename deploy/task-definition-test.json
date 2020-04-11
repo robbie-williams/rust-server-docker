@@ -56,7 +56,7 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": 1950,
+      "memoryReservation": 1900,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "514072586515.dkr.ecr.ap-southeast-2.amazonaws.com/rust-server-docker",
