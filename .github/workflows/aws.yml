@@ -52,20 +52,20 @@ jobs:
         container-name: rust-server-docker
         image: ${{ steps.build-image.outputs.image }}
 
-    - name: Fill in the new image ID in the Amazon ECS task definition for test service
-      id: task-def-test
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: deploy/task-definition-test.json
-        container-name: rust-server-docker
-        image: ${{ steps.build-image.outputs.image }}
+        #    - name: Fill in the new image ID in the Amazon ECS task definition for test service
+        #      id: task-def-test
+        #      uses: aws-actions/amazon-ecs-render-task-definition@v1
+        #      with:
+        #        task-definition: deploy/task-definition-test.json
+        #        container-name: rust-server-docker
+        #        image: ${{ steps.build-image.outputs.image }}
 
-    - name: Deploy Test Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.task-def-test.outputs.task-definition }}
-        service: rust-server-test-service
-        cluster: rust-server-test-cluster
+        #    - name: Deploy Test Amazon ECS task definition
+        #      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        #      with:
+        #        task-definition: ${{ steps.task-def-test.outputs.task-definition }}
+        #        service: rust-server-test-service
+        #        cluster: rust-server-test-cluster
         #        wait-for-service-stability: true
 
     - name: Deploy Amazon ECS task definition
