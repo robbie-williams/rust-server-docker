@@ -37,15 +37,15 @@
         },
         {
           "name": "RUST_SERVER_SALT",
-          "value": "123"
+          "value": "123456"
         },
         {
           "name": "RUST_SERVER_SEED",
-          "value": "123"
+          "value": "12345"
         },
         {
           "name": "RUST_SERVER_WORLDSIZE",
-          "value": "1000"
+          "value": "1600"
         }
       ],
       "resourceRequirements": null,
@@ -56,7 +56,7 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": 1850,
+      "memoryReservation": 3884,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "514072586515.dkr.ecr.ap-southeast-2.amazonaws.com/rust-server-docker:4a97e595d1397d3e689f903cc9daecf1aed1742b",
