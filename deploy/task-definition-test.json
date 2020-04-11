@@ -54,7 +54,7 @@
       "mountPoints": [
         {
           "readOnly": null,
-          "containerPath": "/rust-server-volume",
+          "containerPath": "/steamcmd",
           "sourceVolume": "rust-server-volume"
         }
       ],
