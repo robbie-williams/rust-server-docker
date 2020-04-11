@@ -45,7 +45,7 @@
         },
         {
           "name": "RUST_SERVER_WORLDSIZE",
-          "value": "1600"
+          "value": "1000"
         }
       ],
       "resourceRequirements": null,
@@ -56,7 +56,7 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": 1900,
+      "memoryReservation": 950,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "514072586515.dkr.ecr.ap-southeast-2.amazonaws.com/rust-server-docker",
