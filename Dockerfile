@@ -85,13 +85,13 @@ WORKDIR $STEAMCMDDIR
 VOLUME $STEAMCMDDIR
 
 # Create the volume directories
-RUN mkdir -p /steamcmd/rust /usr/share/nginx/html /var/log/nginx
+RUN mkdir -p /${STEAMCMDDIR}/rust /usr/share/nginx/html /var/log/nginx
 
 # Add plugins
-COPY rust_config/oxide/ /steamcmd/rust/oxide
+COPY rust_config/oxide/ /${STEAMCMDDIR}/rust/oxide
 
 #Add admins
-COPY rust_config/users.cfg /steamcmd/rust/server/${RUST_SERVER_IDENTITY}/cfg/
+COPY rust_config/users.cfg /${STEAMCMDDIR}/rust/server/${RUST_SERVER_IDENTITY}/cfg/
 
 # Setup proper shutdown support
 ADD shutdown_app/ /app/shutdown_app/
@@ -131,7 +131,7 @@ WORKDIR /
 
 # Fix permissions
 RUN chown -R 1000:1000 \
-    /steamcmd \
+    /${STEAMCMDDIR} \
     /app \
     /usr/share/nginx/html \
     /var/log/nginx
