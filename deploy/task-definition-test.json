@@ -35,18 +35,6 @@
           "name": "RUST_SERVER_NAME",
           "value": "RUSTACEAN_TEST"
         },
-        {
-          "name": "RUST_SERVER_SALT",
-          "value": "123456"
-        },
-        {
-          "name": "RUST_SERVER_SEED",
-          "value": "12345"
-        },
-        {
-          "name": "RUST_SERVER_WORLDSIZE",
-          "value": "1500"
-        },
 	{
 	  "name": "RUST_SERVER_DESCRIPTION",
 	  "value": "Welcome to RUSTACEAN!\n\nLife get in the way of gaming? Feeling crusty and outplayed by the grind?\nIntroducing the FATIGUE stat: maximises limited game time with diminishing returns for long play sessions.\n\nJoin our discord for more server information:\nrustacean.io\n\nFatigue levels increase from 0 to 8 (+1 level per in-game day / hour).\nGather rate diminishes from 100% to 10%.\nReduce your fatigue by 1 level for every 1 hour spent sleeping / offline.\n\nMap wipe: weekly (or when forced)\nBP wipe: monthly\nLow mod testing population and small map size\n\nShare new map seeds and feedback in the discord!\n\n[AU/NZ]"
