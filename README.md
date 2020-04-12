@@ -12,7 +12,7 @@ This image also supports having a modded server (using Oxide), check the ```RUST
 The following environment variables are available:
 ```
 RUST_SERVER_STARTUP_ARGUMENTS (DEFAULT: "-batchmode -load -nographics +server.secure 1")
-RUST_SERVER_IDENTITY (DEFAULT: "docker" - Mainly used for the name of the save directory)
+RUST_SERVER_IDENTITY (Mainly used for the name of the save directory)
 RUST_SERVER_SEED (DEFAULT: "12345" - The server map seed, must be an integer)
 RUST_SERVER_WORLDSIZE (DEFAULT: "3500" - The map size, must be an integer)
 RUST_SERVER_NAME (DEFAULT: "Rust Server [DOCKER]" - The publicly visible server name)

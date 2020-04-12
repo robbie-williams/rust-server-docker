@@ -20,22 +20,33 @@
         {
           "hostPort": 28016,
           "protocol": "tcp",
-          "containerPort": 28016
+          "containerPort": 28015
         }
       ],
       "command": null,
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [],
+      "environment": [
+	{
+	  "name": "RUST_SERVER_DESCRIPTION",
+	  "value": "Welcome to RUSTACEAN!\n\nLife get in the way of gaming? Feeling crusty and outplayed by the grind?\nIntroducing the FATIGUE stat: maximises limited game time with diminishing returns for long play sessions.\n\nJoin our discord for more server information:\nrustacean.io\n\nFatigue levels increase from 0 to 8 (+1 level per in-game day / hour).\nGather rate diminishes from 100% to 10%.\nReduce your fatigue by 1 level for every 1 hour spent sleeping / offline.\n\nMap wipe: weekly (or when forced)\nBP wipe: monthly\nLow mod testing population and small map size\n\nShare new map seeds and feedback in the discord!\n\n[AU/NZ]"
+	}
+      ],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
-      "mountPoints": [],
+      "mountPoints": [
+        {
+          "readOnly": null,
+          "containerPath": "/steamcmd/rust",
+          "sourceVolume": "rust-server-volume"
+        }
+      ],
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": 3884,
+      "memoryReservation": 3850,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "514072586515.dkr.ecr.ap-southeast-2.amazonaws.com/rust-server-docker",
@@ -68,7 +79,21 @@
   ],
   "networkMode": null,
   "cpu": null,
+  "revision": 23,
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
-  "volumes": []
+  "volumes": [
+    {
+      "efsVolumeConfiguration": null,
+      "name": "rust-server-volume",
+      "host": null,
+      "dockerVolumeConfiguration": {
+        "autoprovision": true,
+        "labels": null,
+        "scope": "shared",
+        "driver": "local",
+        "driverOpts": null
+      }
+    }
+  ]
 }
