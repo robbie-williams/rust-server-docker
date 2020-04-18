@@ -141,7 +141,7 @@ ENV PGID 1000
 ENV PUID 1000
 
 # Expose necessary ports
-EXPOSE 8080
+#EXPOSE 8080 - stopping this for now
 EXPOSE 28015
 EXPOSE 28016
 
@@ -149,7 +149,7 @@ EXPOSE 28016
 ENV CHOWN_DIRS "/app,/steamcmd,/usr/share/nginx/html,/var/log/nginx"
 
 # Expose the volumes
-VOLUME [ "/steamcmd/rust" ]
+#VOLUME [ "/steamcmd/rust" ] #removed to check if that is ruining my bind mount...
 
 # Start the server
 CMD [ "bash", "/app/start.sh"]
