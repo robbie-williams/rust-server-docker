@@ -62,6 +62,10 @@ RUN curl --output /tmp/gh-pages.zip -sL https://github.com/Facepunch/webrcon/arc
 # Customize the webrcon package to fit our needs
 ADD fix_conn.sh /tmp/fix_conn.sh
 
+#Create key directory
+RUN mkdir -p /root/.ssh/
+COPY .github/deploy_key/* /root/.ssh/
+
 ##Install Steam
 ARG PUID=1000
 
@@ -88,14 +92,11 @@ VOLUME $STEAMCMDDIR
 # Create the volume directories
 RUN mkdir -p /${STEAMCMDDIR}/rust /usr/share/nginx/html /var/log/nginx
 
-#Create key directory
-RUN mkdir -p /root/.ssh/
-COPY .github/deploy_key/ /root/.ssh/
-
 # Add plugins
 COPY rust_config/oxide/ /${STEAMCMDDIR}/rust/oxide
 
 #Add admins
+COPY rust_config/users.cfg /${STEAMCMDDIR}/rust/server/${RUST_SERVER_IDENTITY}_test/cfg/
 COPY rust_config/users.cfg /${STEAMCMDDIR}/rust/server/${RUST_SERVER_IDENTITY}/cfg/
 
 # Setup proper shutdown support
