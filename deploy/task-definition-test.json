@@ -20,7 +20,7 @@
         {
           "hostPort": 28016,
           "protocol": "tcp",
-          "containerPort": 28015
+          "containerPort": 28016
         }
       ],
       "command": null,
@@ -34,6 +34,18 @@
         {
           "name": "RUST_SERVER_NAME",
           "value": "RUSTACEAN_TEST"
+        },
+        {
+          "name": "RUST_SERVER_WORLDSIZE",
+          "value": "1600"
+        },
+        {
+          "name": "RUST_SERVER_SEED",
+          "value": "182"
+        },
+        {
+          "name": "RUST_SERVER_MAXPLAYERS",
+          "value": "40"
         },
 	{
 	  "name": "RUST_SERVER_DESCRIPTION",

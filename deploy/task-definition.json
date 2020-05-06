@@ -20,7 +20,7 @@
         {
           "hostPort": 28016,
           "protocol": "tcp",
-          "containerPort": 28015
+          "containerPort": 28016
         }
       ],
       "command": null,
