@@ -17,17 +17,13 @@ namespace Oxide.Plugins
     // TODO add health max plugin
     // TODO add crafting rate based on fatigue plugin
     // TODO add smelt rate based on fatigue plugin (might be tricky)
+    // TODO split BroadcastValues(...) into two methods
     
     [Info("Fatigue", "Default", "0.0.1")]
     [Description("Sets player fatigue based on time in game.")]
     public class Fatigue : RustPlugin
     {
-        private const int SECONDS_PER_FATIGUE_POINT = 60 * 60;
-
-        [PluginReference]
-        private Plugin CustomBar;
-        [PluginReference]
-        private Plugin FatigueGather;
+        private const int SecondsPerFatiguePoint = 60 * 60;
 
         private class FatigueInfo
         {
@@ -45,11 +41,13 @@ namespace Oxide.Plugins
         }
 
         private Dictionary<string, FatigueInfo> fatigueStore = new Dictionary<string, FatigueInfo>();
+        private Dictionary<string, Timer> playerServiceTimers = new Dictionary<string, Timer>();
+        private Dictionary<string, int> playerLastLevelBroadcast = new Dictionary<string, int>();
 
         void Loaded()
         {  
             LoadState();
-            foreach( var player in BasePlayer.activePlayerList )
+            foreach ( var player in BasePlayer.activePlayerList )
             {
                 if ( player.IPlayer.IsSleeping || player.IsDead()  )
                 {
@@ -60,7 +58,22 @@ namespace Oxide.Plugins
                     PlayerActive( player );
                 }
             }
-            timer.Every( 5.0f, () => ServicePlayers() );
+            serviceDisconnectedInactivePlayers();
+            timer.Every( 300, serviceDisconnectedInactivePlayers );
+            
+        }
+
+        private void serviceDisconnectedInactivePlayers()
+        {
+            foreach ( var id in new List<String>(fatigueStore.Keys) )
+            {
+                BasePlayer fatigueStorePlayer = BasePlayer.Find(id);
+                if (fatigueStorePlayer == null ||
+                    (!fatigueStorePlayer?.IPlayer.IsConnected ?? false))
+                {
+                    ServicePlayer( id );
+                }
+            }
         }
 
         void Unload()
@@ -75,16 +88,14 @@ namespace Oxide.Plugins
 
         object OnPlayerSleep(BasePlayer player)
         {
-            if ( player.IsNpc ) return null;
-            
+            if ( player.IsNpc || !player.IsConnected ) return null;
             PlayerInactive( player );
             return null;
         }
 
         object OnPlayerDeath(BasePlayer player, HitInfo info)
         {
-            if( player.IsNpc ) return null;
-
+            if ( player.IsNpc || !player.IsConnected ) return null;
             RetryAction(
                 () => PlayerInactive(player),
                 () => player.IsDead(),
@@ -93,16 +104,16 @@ namespace Oxide.Plugins
             return null;
         }
 
-        void OnPlayerDisconnected(BasePlayer player, string reason)
+        void OnPluginLoaded(Plugin plugin)
         {
-            PlayerInactive( player );
-        }
-
-        void OnPlayerSleepEnded(BasePlayer player)
-        {
-            if ( player.IsNpc ) return;
-
-            PlayerActive( player );
+            if (plugin.Name.Equals("FatigueText") || plugin.Name.Equals("FatigueGather"))
+            {
+                playerLastLevelBroadcast.Clear();
+                foreach (var id in new List<String>(fatigueStore.Keys))
+                {
+                    ServicePlayer(id);
+                }
+            }
         }
 
         void OnPlayerConnected(BasePlayer player)
@@ -122,10 +133,15 @@ namespace Oxide.Plugins
             }
         }
 
-        private void ServicePlayers()
+        void OnPlayerDisconnected(BasePlayer player, string reason)
         {
-            List<string> activeListIds = new List<string>(fatigueStore.Keys);
-            foreach ( var id in activeListIds ) ServicePlayer(id);
+            PlayerInactive( player );
+        }
+
+        void OnPlayerSleepEnded(BasePlayer player)
+        {
+            if ( player.IsNpc || !player.IsConnected ) return;
+            PlayerActive( player );
         }
 
         private void ServicePlayer(string id)
@@ -152,58 +168,86 @@ namespace Oxide.Plugins
                 return;
             }
 
-            BroadcastValues( 
-                player,
-                info == null ? 
-                    0.0 :
-                    info.SecondsActiveAtStateChange +
-                            ( DateTimeOffset.UtcNow - info.StateChangeTimestamp ).TotalSeconds );
+            Timer existingTimer;
+            if (playerServiceTimers.TryGetValue(player.IPlayer.Id, out existingTimer))
+            {
+                existingTimer.Destroy();
+                playerServiceTimers.Remove(player.IPlayer.Id);
+            }
+
+            var secondsActive = 
+                info.SecondsActiveAtStateChange + ( DateTimeOffset.UtcNow - info.StateChangeTimestamp ).TotalSeconds;
+            var level = Math.Min(8, (int)Math.Floor(secondsActive / SecondsPerFatiguePoint));
+            var nextLevelSecondsActive = ( level + 1) * SecondsPerFatiguePoint;
+            var nextLevelSecondsFromNow = nextLevelSecondsActive - secondsActive;
+            DateTimeOffset? nextLevelTime = DateTimeOffset.UtcNow.AddSeconds( nextLevelSecondsFromNow );
+
+            int lastLevelBroadcast;
+            if (!playerLastLevelBroadcast.TryGetValue(player.IPlayer.Id, out lastLevelBroadcast) ||
+                level != lastLevelBroadcast)
+            {
+                BroadcastValues( player, level, level < 8 ? nextLevelTime : null );
+                playerLastLevelBroadcast[player.IPlayer.Id] = level;
+            }
+            if ( level < 8 )
+            {
+                playerServiceTimers[player.IPlayer.Id] = 
+                        timer.Once( (float)nextLevelSecondsFromNow, () => ServicePlayer(id) );
+            }
         }
 
         private void ServiceInactivePlayer(string id, FatigueInfo info)
         {
             BasePlayer player = BasePlayer.Find(id);
+            Boolean playerConnected = player != null && (player?.IPlayer?.IsConnected ?? false);
             
-            if (player != null && player.IPlayer.IsConnected && !(player.IPlayer.IsSleeping || player.IsDead()))
+            Timer existingTimer;
+            if (playerServiceTimers.TryGetValue(id, out existingTimer))
             {
-                Debug.LogWarning($"Inactive player with id: {player.IPlayer.Id} " +
-                                    "is actually connected, awake and alive!" );
+                existingTimer.Destroy();
+                playerServiceTimers.Remove(id);
+            }
+            
+            var secondsActive = 
+                info.SecondsActiveAtStateChange - ( DateTimeOffset.UtcNow - info.StateChangeTimestamp ).TotalSeconds;
+            var level = Math.Max(0, (int)Math.Floor(secondsActive / SecondsPerFatiguePoint));
+            var nextLevelSecondsActive = level * SecondsPerFatiguePoint;
+            var nextLevelSecondsFromNow = secondsActive - nextLevelSecondsActive;
+
+            DateTimeOffset? nextLevelTime = DateTimeOffset.UtcNow.AddSeconds( nextLevelSecondsFromNow );
+
+            int lastLevelBroadcast;
+            if ( secondsActive <= 0 )
+            {
+                playerLastLevelBroadcast.Remove(id);
+                if (playerConnected) BroadcastValues( player, 0, null );
+                fatigueStore.Remove(id);
                 return;
             }
-            
-            var calculatedSecondsActive =
-                Math.Max(
-                    0.0,
-                    info.SecondsActiveAtStateChange -
-                            ( DateTimeOffset.UtcNow - info.StateChangeTimestamp ).TotalSeconds);
 
-            if (calculatedSecondsActive == 0.0 )
-            {
-                fatigueStore.Remove(id);
-            }
-            
-            if( player != null && player.IPlayer.IsConnected ) 
-            {
-                BroadcastValues(player, calculatedSecondsActive );
-            }
+            if (playerConnected)
+            { 
+                if (!playerLastLevelBroadcast.TryGetValue(id, out lastLevelBroadcast) ||
+                    level != lastLevelBroadcast )
+                {
+                    BroadcastValues( player, level, nextLevelTime );
+                    playerLastLevelBroadcast[id] = level;
+                }
+                playerServiceTimers[id] = 
+                    timer.Once( (float)nextLevelSecondsFromNow, () => ServicePlayer(id) );
+            }  
         }
 
-        private void BroadcastValues( BasePlayer player, double secondsActive )
-        {
-            int fatigueLevel = 
-                Math.Max( 
-                    0,
-                    (int)Math.Ceiling( 8.0 - secondsActive / SECONDS_PER_FATIGUE_POINT));
-            RetryAction(
-                () => CustomBar.Call( "SetValue", player, fatigueLevel ),
-                () => CustomBar != null,
-                1.0f,
-                5 );
-            RetryAction(
-                () => FatigueGather.Call( "SetValue", player, fatigueLevel ),
-                () => FatigueGather != null,
-                1.0f,
-                5 );
+        private void BroadcastValues( BasePlayer player, int fatigueLevel, DateTimeOffset? nextLevelTime )
+        {     
+            Interface.CallHook("OnFatigueLevel", player, fatigueLevel );   
+            if (fatigueLevel == 8)
+            {
+                Interface.CallHook("OnClearFatigueLevelTime", player);
+                return;
+            }
+
+            Interface.CallHook("OnNextFatigueLevelTime", player, nextLevelTime);
         }
 
         private void RetryAction(Action action, Func<bool> condition, float delay, int attempts)
@@ -223,7 +267,7 @@ namespace Oxide.Plugins
 
         private void PlayerActive(BasePlayer player)
         {
-            FatigueInfo fatigueInfo = null;
+            FatigueInfo fatigueInfo;
             fatigueStore.TryGetValue(player.IPlayer.Id, out fatigueInfo);
 
             if ( fatigueInfo?.CurrentState == FatigueInfo.FatigueState.ACTIVE )
@@ -232,40 +276,68 @@ namespace Oxide.Plugins
                 return;
             }
 
-            var activeSeconds = 
+            Timer existingTimer;
+            if (playerServiceTimers.TryGetValue(player.IPlayer.Id, out existingTimer))
+            {
+                existingTimer.Destroy();
+                playerServiceTimers.Remove(player.IPlayer.Id);
+            }
+
+            var secondsActive = 
                 fatigueInfo == null ? 
-                    0.0 : 
-                    fatigueInfo.SecondsActiveAtStateChange -
-                            ( DateTimeOffset.UtcNow - fatigueInfo.StateChangeTimestamp ).TotalSeconds;
-            fatigueStore[player.IPlayer.Id] = 
+                    0 : 
+                    Math.Max(
+                        0,
+                        fatigueInfo.SecondsActiveAtStateChange -
+                            ( DateTimeOffset.UtcNow - fatigueInfo.StateChangeTimestamp ).TotalSeconds);
+            
+            var info = 
                 new FatigueInfo( 
                     FatigueInfo.FatigueState.ACTIVE, 
                     DateTimeOffset.UtcNow, 
-                    activeSeconds );              
+                    secondsActive );
+            fatigueStore[player.IPlayer.Id] = info;
+            playerLastLevelBroadcast.Remove(player.IPlayer.Id);
+            ServicePlayer(player.IPlayer.Id);
         }
 
         private void PlayerInactive( BasePlayer player )
         {
-            FatigueInfo fatigueInfo = null;
-            
-            if( !fatigueStore.TryGetValue(player.IPlayer.Id, out fatigueInfo) )
+            FatigueInfo fatigueInfo;
+            if ( !fatigueStore.TryGetValue(player.IPlayer.Id, out fatigueInfo) ||
+                 fatigueInfo.CurrentState == FatigueInfo.FatigueState.INACTIVE )
             {
-                fatigueStore[player.IPlayer.Id] = 
-                    new FatigueInfo( 
-                        FatigueInfo.FatigueState.INACTIVE, 
-                        DateTimeOffset.UtcNow,
-                        0.0 );
                 return;
             }
 
-            fatigueStore[player.IPlayer.Id] = 
-                new FatigueInfo( 
-                    FatigueInfo.FatigueState.INACTIVE, 
-                    DateTimeOffset.UtcNow,
-                    Math.Min(
-                        SECONDS_PER_FATIGUE_POINT * 8.0, 
-                        fatigueInfo.SecondsActiveAtStateChange +
-                            ( DateTimeOffset.UtcNow - fatigueInfo.StateChangeTimestamp ).TotalSeconds ) );
+            Timer existingTimer;
+            if (playerServiceTimers.TryGetValue(player.IPlayer.Id, out existingTimer))
+            {
+                existingTimer.Destroy();
+                playerServiceTimers.Remove(player.IPlayer.Id);
+            }
+        
+            var secondsActive =
+                Math.Min(
+                    SecondsPerFatiguePoint * 8.0, 
+                    fatigueInfo.SecondsActiveAtStateChange +
+                        ( DateTimeOffset.UtcNow - fatigueInfo.StateChangeTimestamp ).TotalSeconds );
+
+            playerLastLevelBroadcast.Remove(player.IPlayer.Id);
+            if ( secondsActive > 0 )
+            {
+                var info = 
+                    new FatigueInfo( 
+                        FatigueInfo.FatigueState.INACTIVE, 
+                        DateTimeOffset.UtcNow,
+                        secondsActive );
+                fatigueStore[player.IPlayer.Id] = info;
+                ServicePlayer(player.IPlayer.Id);
+            }
+            else
+            {
+                fatigueStore.Remove(player.IPlayer.Id);
+            }
         }
 
         void SaveState()
@@ -287,7 +359,7 @@ namespace Oxide.Plugins
                         entry.Value.SecondsActiveAtStateChange -
                             ( DateTimeOffset.UtcNow - entry.Value.StateChangeTimestamp ).TotalSeconds;
                 }
-                calculatedSecondsActive = Math.Min(calculatedSecondsActive, 8 * SECONDS_PER_FATIGUE_POINT);
+                calculatedSecondsActive = Math.Min(calculatedSecondsActive, 8 * SecondsPerFatiguePoint);
                 dataFile[entry.Key, "SecondsActive"] = calculatedSecondsActive;
                 dataFile[entry.Key, "Timestamp"] = 
                     DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ss.fffK", CultureInfo.InvariantCulture);
@@ -318,7 +390,7 @@ namespace Oxide.Plugins
                 }
                 var secondsSinceTimeStamp = (DateTimeOffset.UtcNow - timestamp).TotalSeconds;
                 var calculatedSecondsActive = 
-                    Math.Min(SECONDS_PER_FATIGUE_POINT * 8.0, secondsActive - secondsSinceTimeStamp);
+                    Math.Min(SecondsPerFatiguePoint * 8.0, secondsActive - secondsSinceTimeStamp);
                 if (calculatedSecondsActive > 0.0 )
                 {
                     fatigueStore[entry.Key] = 

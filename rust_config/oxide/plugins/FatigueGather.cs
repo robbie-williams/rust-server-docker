@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,21 +12,26 @@ namespace Oxide.Plugins
     {
         // TODO - add chat command to show current gather rate.
         
-        private const float OVERALL_MULTIPLIER = 1.0f;
+        private const float OverallMultiplier = 1.0f;
         private Dictionary<string, int> playerFatigueLevels = new Dictionary<string, int>();
 
         private Dictionary<int, float> fatigueLevelsToMultipliers = new Dictionary<int, float>
         {
-            [8] = 1.00f,
-            [7] = 1.00f,
-            [6] = 0.87f,
-            [5] = 0.74f,
+            [0] = 1.00f,
+            [1] = 1.00f,
+            [2] = 0.87f,
+            [3] = 0.74f,
             [4] = 0.61f,
-            [3] = 0.49f,
-            [2] = 0.36f,
-            [1] = 0.23f,
-            [0] = 0.10f
+            [5] = 0.49f,
+            [6] = 0.36f,
+            [7] = 0.23f,
+            [8] = 0.10f
         };
+
+        private Dictionary<int, float> GetFatigueGatherTable()
+        {
+            return fatigueLevelsToMultipliers;
+        }
 
         private float getModifierForPlayer(BaseEntity entity)
         {
@@ -34,16 +39,16 @@ namespace Oxide.Plugins
             if( steamId == null )
             {
                 Debug.LogWarning("Entity not a player");
-                return OVERALL_MULTIPLIER;
+                return OverallMultiplier;
             } 
 
             var playerFatigueLevel = -1;
             if (!playerFatigueLevels.TryGetValue(steamId, out playerFatigueLevel))
             {
                 Debug.LogWarning($"Count not find steam ID {steamId} in fatigueLevel store");
-                return OVERALL_MULTIPLIER;
+                return OverallMultiplier;
             }
-            return OVERALL_MULTIPLIER * fatigueLevelsToMultipliers[playerFatigueLevel];
+            return OverallMultiplier * fatigueLevelsToMultipliers[playerFatigueLevel];
         }
 
         private int handlePartial(float value)
@@ -57,7 +62,7 @@ namespace Oxide.Plugins
             return whole + roundedPartial;
         }
 
-        private void SetValue( BasePlayer player, int value )
+        private void OnFatigueLevel( BasePlayer player, int value)
         {
             if( value < 0 || value > 8)
             {
@@ -107,13 +112,13 @@ namespace Oxide.Plugins
         {
             for (var i = 0; i < items.Count; i++)
             {
-                items[i].amount = handlePartial(items[i].amount * OVERALL_MULTIPLIER);
+                items[i].amount = handlePartial(items[i].amount * OverallMultiplier);
             }
         }
 
         private void OnExcavatorGather(ExcavatorArm excavator, Item item)
         {
-            item.amount = handlePartial(item.amount * OVERALL_MULTIPLIER);
+            item.amount = handlePartial(item.amount * OverallMultiplier);
         }
 
         private void OnCollectiblePickup(Item item, BasePlayer player)
@@ -123,7 +128,7 @@ namespace Oxide.Plugins
 
         private void OnSurveyGather(SurveyCharge surveyCharge, Item item)
         {
-            item.amount = handlePartial(item.amount * OVERALL_MULTIPLIER);
+            item.amount = handlePartial(item.amount * OverallMultiplier);
         }
     }
 }

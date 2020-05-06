@@ -29,6 +29,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        git \
         curl \
         nginx \
         expect \
@@ -86,6 +87,10 @@ VOLUME $STEAMCMDDIR
 
 # Create the volume directories
 RUN mkdir -p /${STEAMCMDDIR}/rust /usr/share/nginx/html /var/log/nginx
+
+#Create key directory
+RUN mkdir -p /root/.ssh/
+COPY .github/deploy_key/ /root/.ssh/
 
 # Add plugins
 COPY rust_config/oxide/ /${STEAMCMDDIR}/rust/oxide
