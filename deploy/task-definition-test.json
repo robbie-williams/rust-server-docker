@@ -45,7 +45,7 @@
         },
         {
           "name": "RUST_SERVER_MAXPLAYERS",
-          "value": "40"
+          "value": "25"
         },
       	{
       	  "name": "RUST_SERVER_DESCRIPTION",
