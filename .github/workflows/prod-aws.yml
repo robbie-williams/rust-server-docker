@@ -3,7 +3,6 @@
 
 name: Build and Deploy Prod to Amazon ECS
 
-
 on:
   push:
     # Sequence of patterns matched against refs/tags
