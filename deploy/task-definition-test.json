@@ -33,7 +33,7 @@
         },
         {
           "name": "RUST_SERVER_NAME",
-          "value": "RUSTACEAN_TEST"
+          "value": "cru staging"
         },
         {
           "name": "RUST_SERVER_WORLDSIZE",
