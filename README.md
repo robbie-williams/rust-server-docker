@@ -40,14 +40,7 @@ When the server starts up or restarts, it will move old logs to `logs/archive/`.
 
 # How to send or receive command to/from the server
 
-We recently added a small application, called *rcon*, that can both send and receive messages to the server, much like the console on the Windows version, but this happens to use RCON (webrcon).
-To use it, simply run the following on the host: `docker exec rust-server rcon say Hello World`, substituting *rust-server* for your own container name.
+Run the following on the host: `docker exec rust-server rcon say Hello World`, substituting *rust-server* for your own container name.
 
-# Didstopa Guide
 
-Didstopia original guide on how to use this image [here](http://rust.didscraft.com/rust-server-on-linux-using-docker/).
-
-# Anything else
-
-If you need help, have questions or bug submissions, feel free to contact me **@Dids** on Twitter, and on the *Rust Server Owners* Slack community.
 
