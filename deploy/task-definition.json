@@ -29,11 +29,11 @@
       "environment": [
       	{
           "name": "RUST_SERVER_WORLDSIZE",
-          "value": "3000"
+          "value": "2000"
         },
         {
           "name": "RUST_SERVER_SEED",
-          "value": "651465465"
+          "value": "12"
         },
         {
           "name": "RUST_SERVER_MAXPLAYERS",
