@@ -150,6 +150,7 @@ ENV PUID 1000
 #EXPOSE 8080 - stopping this for now
 EXPOSE 28015
 EXPOSE 28016
+EXPOSE 28017
 
 # Define directories to take ownership of
 ENV CHOWN_DIRS "/app,/steamcmd,/usr/share/nginx/html,/var/log/nginx"

@@ -134,6 +134,10 @@ if [ ! -z ${RUST_RCON_PASSWORD+x} ]; then
 	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $RUST_RCON_PASSWORD"
 fi
 
+if [ ! -z ${RUST_APP_PORT+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +app.port $RUST_APP_PORT"
+fi
+
 if [ ! -z ${RUST_RCON_WEB+x} ]; then
 	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.web $RUST_RCON_WEB"
 	if [ "$RUST_RCON_WEB" = "1" ]; then
