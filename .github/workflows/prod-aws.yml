@@ -55,7 +55,7 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-#        service: rust-server-service
+        service: rust-server-service
         cluster: rust-server-cluster
         wait-for-service-stability: true
 
