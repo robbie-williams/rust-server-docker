@@ -1,5 +1,13 @@
 # Rust server that runs inside a Docker container
 
+This repo started as a direct copy of didstopia's work (https://github.com/Didstopia/rust-server) . Non-forked for cleanliness, personal upkeep, and customisation, but if you want to support didstopia's great work feel free to peruse their services[![](https://didstopia.com/en/assets/img/didstopia_logo_small.png)](https://didstopia.com/en/index.html
+
+This repo is different in that;
+- Github Actions Workflows are AWS oriented i.e. deploy to ECR/ECS
+- Simplified deployments and test clusters built in
+
+This is largely based on didstopia's work (https://github.com/Didstopia/rust-server) 
+
 **NOTE**: This image will install/update on startup. The path ```/steamcmd/rust``` can be mounted on the host for data persistence.
 Also note that this image provides the new web-based RCON, so you should set ```RUST_RCON_PASSWORD``` to a more secure password.
 This image also supports having a modded server (using Oxide), check the ```RUST_OXIDE_ENABLED``` variable below.
