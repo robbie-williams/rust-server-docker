@@ -1,6 +1,6 @@
 # Rust server that runs inside a Docker container
 
-This repo started as a direct copy of didstopia's work (https://github.com/Didstopia/rust-server) . Non-forked for cleanliness, personal upkeep, and customisation, but if you want to support didstopia's great work feel free to peruse their services[![](https://didstopia.com/en/assets/img/didstopia_logo_small.png)](https://didstopia.com/en/index.html
+This repo started as a direct copy of didstopia's work (https://github.com/Didstopia/rust-server) . Non-forked for cleanliness, personal upkeep, and customisation, but if you want to support didstopia's great work feel free to peruse their services[![](https://didstopia.com/en/assets/img/didstopia_logo_small.png)
 
 This repo is different in that;
 - Github Actions Workflows are AWS oriented i.e. deploy to ECR/ECS
